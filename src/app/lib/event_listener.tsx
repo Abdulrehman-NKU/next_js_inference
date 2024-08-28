@@ -58,6 +58,7 @@ const Event_listener = () => {
       socket.off("inference_updated", handleInferenceStatusUpdatesEvent);
       socket.off("inference_stopped", handleInferenceStatusUpdatesEvent);
       socket.off("inference_paused", handleInferenceStatusUpdatesEvent);
+      socket.off("inference_completed", handleInferenceStatusUpdatesEvent);
     };
   }, [dispatch, userInfo]);
 

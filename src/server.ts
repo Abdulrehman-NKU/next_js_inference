@@ -83,6 +83,24 @@ app.prepare().then(() => {
     updateTheInferenceInDB(data, true);
   });
 
+  // v2
+
+  inference_socket.on("v2_queued", (data) =>
+    io.emit("v2_inferenence_queued", data)
+  );
+  inference_socket.on("v2_start", (data) =>
+    io.emit("v2_inference_started", data)
+  );
+  inference_socket.on("v2_update", (data) =>
+    io.emit("v2_inference_updated", data)
+  );
+  inference_socket.on("v2_complete", (data) =>
+    io.emit("v2_inference_completed", data)
+  );
+  inference_socket.on("v2_pause", (data) =>
+    io.emit("v2_inference_paused", data)
+  );
+
   httpServer
     .once("error", (err) => {
       console.error(err);

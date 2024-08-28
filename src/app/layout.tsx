@@ -9,7 +9,7 @@ import StoreProvider from "./store_provider";
 import { Toaster } from "react-hot-toast";
 import Event_listener from "./lib/event_listener";
 import { useAppDispatch, useAppSelector } from "./lib/redux/hooks";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { initialize } from "./lib/redux/features/auth/auth_slice";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -70,9 +70,16 @@ const Auth = () => {
   );
   const router = useRouter();
 
+  const path = usePathname();
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    if (
+      (isInitialized && path.startsWith("/admin")) ||
+      path.startsWith("/client")
+    )
+      return;
     if (isInitialized && userInfo.isAdmin) router.push("/admin");
     else if (isInitialized) router.push("/client");
     else if (localStorage.getItem("user_info")) {
